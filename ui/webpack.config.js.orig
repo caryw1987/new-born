@@ -1,0 +1,253 @@
+<<<<<<< HEAD
+const webpack = require('webpack');
+
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const BabiliPlugin = require('babili-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+
+const cssPlugin = new ExtractTextPlugin({
+  filename: '[name].bundle.css',
+});
+
+
+module.exports = {
+	// 可以配置多个入口
+  entry: {
+    vendor: [
+      'jquery',
+      'angular',
+      'angular-ui-router',
+      'bootstrap/dist/css/bootstrap.css',
+      'bootstrap/dist/js/bootstrap',
+      'lodash'
+    ],
+    main: __dirname + '/src/entries/main.js',
+    index: __dirname + '/src/entries/index.js',
+    admin: __dirname + '/src/entries/admin.js',
+    adminLogin: __dirname + '/src/entries/adminLogin.js',
+    test: __dirname + '/src/entries/test.js',
+    personalHome: __dirname + '/src/entries/personalHome.js',
+    register:__dirname + '/src/entries/register.js'
+  },
+  output: {
+    path: __dirname + '/dist',
+    filename: '[name].bundle.js' //打包后输出文件的文件��
+  },
+
+  module: {
+    loaders: [{
+      test: /\.js$/,
+      exclude: /node_modules/,
+      loaders: ['babel-loader', 'eslint-loader']
+    }, {
+      test: /\.html$/,
+      use: ['html-loader']
+    }, {
+      test: /\.css$/,
+      use: cssPlugin.extract({
+        use: 'css-loader',
+        fallback: 'style-loader'
+      }),
+    }, {
+      test: /\.(png)|(jpg)$/,
+      loader: 'url-loader?limit=50000'
+    }, {
+      test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+      use: 'url-loader?limit=10000&mimetype=application/font-woff'
+    }, {
+      test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+      use: 'file-loader'
+    }]
+  },
+
+  devtool: 'eval-source-map',
+  devServer: {
+    inline: true, //实时刷新
+    port: 9000,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8080'
+      }
+    }
+  },
+
+  plugins: [
+
+		// 当需要新增一个页面时，新添加一个HtmlWebpackPlugin就可以了��
+    new HtmlWebpackPlugin({
+      chunks: ['vendor', 'main'],
+      filename: __dirname + '/dist/main.html',
+      template: './src/entries/main.html'
+    }),
+    new HtmlWebpackPlugin({
+      chunks: ['vendor', 'admin'],
+      filename: __dirname + '/dist/admin.html',
+      template: './src/entries/admin.html'
+    }),
+    new HtmlWebpackPlugin({
+      chunks: ['vendor', 'adminLogin'],
+      filename: __dirname + '/dist/adminLogin.html',
+      template: './src/entries/adminLogin.html'
+    }),
+    new HtmlWebpackPlugin({
+      chunks: ['vendor', 'index'],
+      filename: __dirname + '/dist/index.html',
+      template: './src/entries/index.html'
+    }),
+    new HtmlWebpackPlugin({
+      chunks: ['vendor', 'test'],
+      filename: __dirname + '/dist/test.html',
+      template: './src/entries/test.html'
+    }),
+    new HtmlWebpackPlugin({
+      chunks: ['vendor', 'personalHome'],
+      filename: __dirname + '/dist/personalHome.html',
+      template: './src/entries/personalHome.html'
+    }),
+    new HtmlWebpackPlugin({
+      chunks: ['vendor', 'register'],
+      filename: __dirname + '/dist/register.html',
+      template: './src/entries/register.html'
+    }),
+
+
+    new webpack.ProvidePlugin({
+      $: 'jquery',
+      jQuery: 'jquery',
+      'window.jQuery': 'jquery',
+      'window.jquery': 'jquery'
+    }),
+    new BabiliPlugin(),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      minChunks: Infinity
+    }),
+    cssPlugin
+  ]
+};
+=======
+const webpack = require('webpack');
+
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const BabiliPlugin = require('babili-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+
+const cssPlugin = new ExtractTextPlugin({
+  filename: '[name].bundle.css',
+});
+
+
+module.exports = {
+	// 可以配置多个入口
+  entry: {
+    vendor: [
+      'jquery',
+      'angular',
+      'angular-ui-router',
+      'bootstrap/dist/css/bootstrap.css',
+      'bootstrap/dist/js/bootstrap',
+      'lodash'
+    ],
+    main: __dirname + '/src/entries/main.js',
+    index: __dirname + '/src/entries/index.js',
+    admin: __dirname + '/src/entries/admin.js',
+    test: __dirname + '/src/entries/test.js',
+    personalHome: __dirname + '/src/entries/personalHome.js',
+    bpCreation: __dirname + '/src/entries/bpCreation.js'
+  },
+  output: {
+    path: __dirname + '/dist',
+    filename: '[name].bundle.js' //打包后输出文件的文件��
+  },
+
+  module: {
+    loaders: [{
+      test: /\.js$/,
+      exclude: /node_modules/,
+      loaders: ['babel-loader', 'eslint-loader']
+    }, {
+      test: /\.html$/,
+      use: ['html-loader']
+    }, {
+      test: /\.css$/,
+      use: cssPlugin.extract({
+        use: 'css-loader',
+        fallback: 'style-loader'
+      }),
+    }, {
+      test: /\.(png)|(jpg)$/,
+      loader: 'url-loader?limit=50000'
+    }, {
+      test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+      use: 'url-loader?limit=10000&mimetype=application/font-woff'
+    }, {
+      test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+      use: 'file-loader'
+    }]
+  },
+
+  devtool: 'eval-source-map',
+  devServer: {
+    inline: true, //实时刷新
+    port: 9000,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8080'
+      }
+    }
+  },
+
+  plugins: [
+
+		// 当需要新增一个页面时，新添加一个HtmlWebpackPlugin就可以了��
+    new HtmlWebpackPlugin({
+      chunks: ['vendor', 'main'],
+      filename: __dirname + '/dist/main.html',
+      template: './src/entries/main.html'
+    }),
+    new HtmlWebpackPlugin({
+      chunks: ['vendor', 'admin'],
+      filename: __dirname + '/dist/admin.html',
+      template: './src/entries/admin.html'
+    }),
+    new HtmlWebpackPlugin({
+      chunks: ['vendor', 'index'],
+      filename: __dirname + '/dist/index.html',
+      template: './src/entries/index.html'
+    }),
+    new HtmlWebpackPlugin({
+      chunks: ['vendor', 'admin'],
+      filename: __dirname + '/dist/admin.html',
+      template: './src/entries/admin.html'
+    }),
+    new HtmlWebpackPlugin({
+      chunks: ['vendor', 'test'],
+      filename: __dirname + '/dist/test.html',
+      template: './src/entries/test.html'
+    }),
+    new HtmlWebpackPlugin({
+      chunks: ['vendor', 'personalHome'],
+      filename: __dirname + '/dist/personalHome.html',
+      template: './src/entries/personalHome.html'
+    }),
+    new HtmlWebpackPlugin({
+      chunks: ['vendor', 'bpCreation'],
+      filename: __dirname + '/dist/bpCreation.html',
+      template: './src/entries/bpCreation.html'
+    }),
+
+    new webpack.ProvidePlugin({
+      $: 'jquery',
+      jQuery: 'jquery',
+      'window.jQuery': 'jquery',
+      'window.jquery': 'jquery'
+    }),
+    new BabiliPlugin(),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      minChunks: Infinity
+    }),
+    cssPlugin
+  ]
+};
+>>>>>>> 676f71f... Update webpack.config.js
